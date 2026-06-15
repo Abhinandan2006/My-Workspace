@@ -83,11 +83,16 @@ function getConnectIcon(label) {
       );
     case 'LeetCode':
       return (
-        <svg viewBox="0 0 24 24" className="connect-button-icon connect-button-icon-leetcode" aria-hidden="true" fill="none">
-          <path d="M12 4.2 5.3 11 12 17.8" />
-          <path d="M12 4.2 17.2 9.4" />
-          <path d="M12 17.8 17.2 12.6" />
-          <path d="M9.7 12h7.9" />
+        <svg
+          viewBox="0 0 24 24"
+          className="connect-button-icon connect-button-icon-leetcode"
+          aria-hidden="true"
+          fill="none"
+        >
+          <path d="M13.7 4.9 5.6 13l8.1 8.1" />
+          <path d="M13.7 4.9 19 10.2" />
+          <path d="M13.7 21.1 19 15.8" />
+          <path d="M10.5 13h8.4" />
         </svg>
       );
     default:
@@ -442,6 +447,16 @@ function App() {
         </section>
 
       </main>
+
+      <footer className="site-footer">
+        <div className="site-footer-line" />
+        <div className="site-footer-content">
+          <p className="site-footer-quote">
+            "Great things are built one thoughtful line at a time."
+          </p>
+          <p className="site-footer-copy">© 2026 Abhinandan Dwivedi. Crafted with care and curiosity.</p>
+        </div>
+      </footer>
 
     </div>
   );

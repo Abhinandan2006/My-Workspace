@@ -537,7 +537,7 @@ img {
   width: 28px;
   height: 28px;
   stroke: currentColor;
-  stroke-width: 1.9;
+  stroke-width: 2.4;
   stroke-linecap: round;
   stroke-linejoin: round;
   fill: none;
@@ -552,7 +552,7 @@ img {
 }
 
 .connect-button-icon-leetcode {
-  color: #86dbff;
+  color: #5bb4ff;
 }
 
 .contact-connect-note,
@@ -629,6 +629,44 @@ img {
 
 .send-button {
   width: 100%;
+}
+
+.site-footer {
+  position: relative;
+  z-index: 1;
+  width: min(var(--max-width), calc(100% - 32px));
+  margin: 0 auto 28px;
+  padding: 0 0 8px;
+}
+
+.site-footer-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(167, 189, 224, 0.18), transparent);
+  margin-bottom: 22px;
+}
+
+.site-footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 0 4px;
+}
+
+.site-footer-quote {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.02rem;
+  line-height: 1.7;
+  max-width: 56ch;
+}
+
+.site-footer-copy {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-align: right;
 }
 
 .reveal,
@@ -769,6 +807,20 @@ img {
 
   .contact-copy h2 {
     font-size: clamp(1.65rem, 8vw, 2.3rem);
+  }
+
+  .site-footer {
+    width: min(var(--max-width), calc(100% - 20px));
+    margin-bottom: 22px;
+  }
+
+  .site-footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .site-footer-copy {
+    text-align: left;
   }
 }
 
