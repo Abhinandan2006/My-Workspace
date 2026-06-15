@@ -338,7 +338,7 @@ function App() {
         <section className="section contact-section" id="contact">
           <div className="section-heading contact-heading contact-heading-center">
             <p className="eyebrow eyebrow-pill">Get in touch</p>
-            <h2>Let's Work Together!</h2>
+            <h2>Let's Build Together!</h2>
             <p className="contact-heading-text">
               Open to opportunities, collaborations, and meaningful conversations - lets connect.
             </p>
@@ -454,7 +454,7 @@ function App() {
           <p className="site-footer-quote">
             "Great things are built one thoughtful line at a time."
           </p>
-          <p className="site-footer-copy">© 2026 Abhinandan Dwivedi. Crafted with care and curiosity.</p>
+          <p className="site-footer-copy">© 2026 Abhinandan Dwivedi. ❄️ Crafted with care and curiosity.</p>
         </div>
       </footer>
 
