@@ -204,7 +204,8 @@ img {
 }
 
 .hero-actions,
-.contact-links {
+.contact-links,
+.connect-links {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
@@ -309,6 +310,36 @@ img {
   margin-bottom: 26px;
 }
 
+.contact-heading {
+  margin: 0 auto 36px;
+  text-align: center;
+  max-width: 860px;
+}
+
+.contact-heading-center .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.eyebrow-pill {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(116, 215, 255, 0.08);
+  border: 1px solid rgba(116, 215, 255, 0.18);
+}
+
+.contact-heading-text {
+  margin: 0 auto;
+  max-width: 900px;
+  color: var(--muted);
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
 .section-heading h2 {
   font-size: clamp(2rem, 4vw, 3.6rem);
   line-height: 1.05;
@@ -382,9 +413,222 @@ img {
 
 .contact-panel {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 20px;
+  grid-template-columns: minmax(320px, 0.92fr) minmax(340px, 1.08fr);
+  gap: 26px;
+  align-items: start;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 78% 20%, rgba(116, 215, 255, 0.15), transparent 28%),
+    radial-gradient(circle at 20% 80%, rgba(116, 215, 255, 0.08), transparent 26%),
+    rgba(11, 20, 35, 0.78);
+}
+
+.contact-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.contact-info-card {
+  display: flex;
   align-items: center;
+  gap: 18px;
+  padding: 18px 20px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.contact-info-card-link:hover,
+.contact-info-card-link:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(116, 215, 255, 0.28);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.contact-icon-shell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  flex: none;
+  border-radius: 50%;
+  border: 1px solid rgba(116, 215, 255, 0.18);
+  background: rgba(116, 215, 255, 0.07);
+  color: var(--accent);
+}
+
+.contact-card-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.contact-icon-shell-location {
+  color: #b077ff;
+  border-color: rgba(176, 119, 255, 0.18);
+  background: rgba(176, 119, 255, 0.08);
+}
+
+.contact-info-copy {
+  display: grid;
+  gap: 2px;
+}
+
+.contact-info-label {
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+.contact-info-value {
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.contact-connect-block {
+  display: grid;
+  gap: 16px;
+  padding-top: 10px;
+}
+
+.contact-connect-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.connect-icon-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.connect-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  border: 1px solid rgba(167, 189, 224, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.connect-icon-button:hover,
+.connect-icon-button:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(116, 215, 255, 0.3);
+  background: rgba(116, 215, 255, 0.08);
+}
+
+.connect-button-icon {
+  width: 28px;
+  height: 28px;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.connect-button-icon-github {
+  color: #edf4ff;
+}
+
+.connect-button-icon-linkedin {
+  color: #7fc9ff;
+}
+
+.connect-button-icon-leetcode {
+  color: #86dbff;
+}
+
+.contact-connect-note,
+.connect-section-note {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 0.98rem;
+}
+
+.connect-section-note {
+  max-width: 760px;
+  margin-top: 10px;
+}
+
+.contact-form-panel {
+  display: grid;
+  gap: 16px;
+  padding: 26px;
+  background:
+    radial-gradient(circle at 80% 18%, rgba(116, 215, 255, 0.11), transparent 26%),
+    rgba(255, 255, 255, 0.03);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.contact-form {
+  display: grid;
+  gap: 16px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.field-group {
+  display: grid;
+  gap: 10px;
+}
+
+.field-group span {
+  color: var(--text);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.field-group input,
+.field-group textarea {
+  width: 100%;
+  border: 1px solid rgba(167, 189, 224, 0.14);
+  border-radius: 18px;
+  background: rgba(8, 16, 28, 0.72);
+  color: var(--text);
+  padding: 14px 16px;
+  font: inherit;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.field-group input::placeholder,
+.field-group textarea::placeholder {
+  color: rgba(168, 180, 199, 0.72);
+}
+
+.field-group input:focus,
+.field-group textarea:focus {
+  outline: none;
+  border-color: rgba(116, 215, 255, 0.62);
+  box-shadow: 0 0 0 4px rgba(116, 215, 255, 0.12);
+}
+
+.field-group textarea {
+  resize: vertical;
+  min-height: 160px;
+}
+
+.send-button {
+  width: 100%;
 }
 
 .reveal,
@@ -491,14 +735,40 @@ img {
     padding: 22px;
   }
 
-  .hero-actions,
-  .contact-links {
-    flex-direction: column;
-    align-items: stretch;
+  .contact-panel {
+    grid-template-columns: 1fr;
   }
 
-  .button {
-    width: 100%;
+  .contact-heading {
+    margin-bottom: 26px;
+  }
+
+  .contact-heading-text {
+    font-size: 1rem;
+  }
+
+  .contact-info-card {
+    padding: 18px;
+    gap: 14px;
+  }
+
+  .contact-icon-shell {
+    width: 52px;
+    height: 52px;
+  }
+
+  .connect-icon-button {
+    width: 54px;
+    height: 54px;
+  }
+
+  .connect-link-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .contact-copy h2 {
+    font-size: clamp(1.65rem, 8vw, 2.3rem);
   }
 }
 

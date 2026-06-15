@@ -44,12 +44,7 @@ const education = [
   },
 ];
 
-const contactLinks = [
-  {
-    label: 'Email Me',
-    href: 'mailto:dwivediabhinandan2006@gmail.com',
-    primary: true,
-  },
+const connectLinks = [
   {
     label: 'GitHub',
     href: 'https://github.com/Abhinandan2006',
@@ -64,6 +59,42 @@ const contactLinks = [
   },
 ];
 
+const contactEmail = 'dwivediabhinandan2006@gmail.com';
+const contactLocation = 'Kanpur, Uttar Pradesh';
+
+function getConnectIcon(label) {
+  switch (label) {
+    case 'GitHub':
+      return (
+        <svg viewBox="0 0 24 24" className="connect-button-icon connect-button-icon-github" aria-hidden="true" fill="none">
+          <path d="M8.5 20.5v-2.2c-2.71.6-3.28-1.15-3.28-1.15-.45-1.14-1.1-1.44-1.1-1.44-.9-.62.07-.61.07-.61.99.07 1.51 1.01 1.51 1.01.88 1.53 2.31 1.09 2.87.83.09-.66.35-1.09.63-1.34-2.21-.25-4.53-1.11-4.53-4.93 0-1.09.39-1.99 1.03-2.69-.11-.25-.45-1.27.1-2.64 0 0 .84-.27 2.76 1.06a9.46 9.46 0 0 1 5.04 0c1.92-1.33 2.76-1.06 2.76-1.06.55 1.37.21 2.39.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.83-2.33 4.68-4.55 4.92.35.3.67.92.67 1.87v2.77" />
+          <path d="M9.3 18.4a2.85 2.85 0 0 1 5.4 0" />
+        </svg>
+      );
+    case 'LinkedIn':
+      return (
+        <svg viewBox="0 0 24 24" className="connect-button-icon connect-button-icon-linkedin" aria-hidden="true" fill="none">
+          <rect x="4" y="4" width="16" height="16" rx="3.5" />
+          <path d="M8.1 9.4V18" />
+          <path d="M8.1 6.4v.1" />
+          <path d="M11.7 18v-4.6c0-1.8 1-2.9 2.6-2.9 1.5 0 2.2 1 2.2 2.9V18" />
+          <path d="M11.7 9.4V18" />
+        </svg>
+      );
+    case 'LeetCode':
+      return (
+        <svg viewBox="0 0 24 24" className="connect-button-icon connect-button-icon-leetcode" aria-hidden="true" fill="none">
+          <path d="M12 4.2 5.3 11 12 17.8" />
+          <path d="M12 4.2 17.2 9.4" />
+          <path d="M12 17.8 17.2 12.6" />
+          <path d="M9.7 12h7.9" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
 const roleTitles = [
   'AI/ML Enthusiast and MLOps engineer.',
   'Learning relentlessly. Building intelligently. Deploying confidently.',
@@ -75,6 +106,11 @@ const sectionIds = ['hero', 'about', 'skills', 'projects', 'education', 'contact
 function App() {
   const [roleIndex, setRoleIndex] = useState(0);
   const [activeSection, setActiveSection] = useState('hero');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
 
   useEffect(() => {
     const intervalId = window.setInterval(() => {
@@ -110,6 +146,31 @@ function App() {
 
     return () => observer.disconnect();
   }, []);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormData((currentFormData) => ({
+      ...currentFormData,
+      [name]: value,
+    }));
+  };
+
+  const handleContactSubmit = (event) => {
+    event.preventDefault();
+
+    const subject = `Portfolio contact from ${formData.name}`;
+    const body = [
+      `Name: ${formData.name}`,
+      `Email: ${formData.email}`,
+      '',
+      formData.message,
+    ].join('\n');
+
+    const mailtoUrl = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    window.location.href = mailtoUrl;
+  };
 
   return (
     <div className="page-shell">
@@ -270,31 +331,118 @@ function App() {
         </section>
 
         <section className="section contact-section" id="contact">
+          <div className="section-heading contact-heading contact-heading-center">
+            <p className="eyebrow eyebrow-pill">Get in touch</p>
+            <h2>Let's Work Together!</h2>
+            <p className="contact-heading-text">
+              Open to opportunities, collaborations, and meaningful conversations - lets connect.
+            </p>
+          </div>
+
           <div className="glass-panel contact-panel">
-            <div>
-              <p className="eyebrow">Contact</p>
-              <h2>Let’s build something useful together.</h2>
-              <p>
-                Open to opportunities in cloud development, AI/ML, and software engineering.
-                Reach out for collaborations, internships, or project discussions.
-              </p>
+            <div className="contact-stack">
+              <a
+                className="contact-info-card contact-info-card-link"
+                href={`mailto:${contactEmail}`}
+                aria-label={`Email ${contactEmail}`}
+              >
+                <span className="contact-icon-shell contact-icon-shell-email" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" className="contact-card-icon" fill="none">
+                    <rect x="4" y="6" width="16" height="12" rx="2.5" />
+                    <path d="M5.5 8.5 12 13l6.5-4.5" />
+                  </svg>
+                </span>
+                <span className="contact-info-copy">
+                  <span className="contact-info-label">Email</span>
+                  <span className="contact-info-value">{contactEmail}</span>
+                </span>
+              </a>
+
+              <article className="contact-info-card">
+                <span className="contact-icon-shell contact-icon-shell-location" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" className="contact-card-icon" fill="none">
+                    <path d="M12 21s6-5.4 6-11a6 6 0 1 0-12 0c0 5.6 6 11 6 11Z" />
+                    <circle cx="12" cy="10" r="2.4" />
+                  </svg>
+                </span>
+                <span className="contact-info-copy">
+                  <span className="contact-info-label">Location</span>
+                  <span className="contact-info-value">{contactLocation}</span>
+                </span>
+              </article>
+
+              <div className="contact-connect-block">
+                <p className="contact-connect-label">Connect with me!</p>
+                <div className="connect-icon-row">
+                  {connectLinks.map((link) => (
+                    <a
+                      key={link.label}
+                      className="connect-icon-button"
+                      href={link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={link.label}
+                    >
+                      {getConnectIcon(link.label)}
+                    </a>
+                  ))}
+                </div>
+                <p className="contact-connect-note">
+                  GitHub for code, LinkedIn for networking, and LeetCode for problem solving.
+                </p>
+              </div>
+
             </div>
-            <div className="contact-links">
-              {contactLinks.map((link) => (
-                <a
-                  key={link.label}
-                  className={link.primary ? 'button button-primary' : 'button button-secondary'}
-                  href={link.href}
-                  target={link.href.startsWith('mailto:') ? undefined : '_blank'}
-                  rel={link.href.startsWith('mailto:') ? undefined : 'noreferrer'}
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
+
+            <form className="contact-form contact-form-panel" onSubmit={handleContactSubmit}>
+              <label className="field-group" htmlFor="name">
+                <span>Name</span>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="Your full name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                />
+              </label>
+
+              <label className="field-group" htmlFor="email">
+                <span>Email ID</span>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                />
+              </label>
+
+              <label className="field-group field-group-message" htmlFor="message">
+                <span>Message</span>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="6"
+                  placeholder="Write your message here"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                />
+              </label>
+
+              <button className="button button-primary send-button" type="submit">
+                Send Message
+              </button>
+            </form>
           </div>
         </section>
+
       </main>
+
     </div>
   );
 }
