@@ -255,8 +255,17 @@ img {
   border-radius: var(--radius-xl);
 }
 
-.hero-card {
+.hero-card,
+.hero-image-container {
   padding: 28px;
+}
+
+.hero-profile-image {
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--radius-xl);
 }
 
 .card-label,

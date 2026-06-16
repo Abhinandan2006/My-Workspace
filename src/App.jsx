@@ -238,27 +238,8 @@ function App() {
             </div>
           </div>
 
-          <aside className="hero-card glass-panel reveal-delay-2">
-            <p className="card-label">Profile Snapshot</p>
-            <h2>Building in cloud, AI, and intelligent automation.</h2>
-            <p>
-              A focused developer profile combining Java, Python, DSA, ML, deep learning,
-              NLP, MLOps, and cloud computing to solve real-world problems.
-            </p>
-            <div className="hero-stats">
-              <div>
-                <span>09</span>
-                <p>Core skills</p>
-              </div>
-              <div>
-                <span>03</span>
-                <p>Featured projects</p>
-              </div>
-              <div>
-                <span>01</span>
-                <p>Clear mission</p>
-              </div>
-            </div>
+          <aside className="hero-image-container reveal-delay-2">
+            <img src="/profile.jpeg" alt="Abhinandan Dwivedi profile" className="hero-profile-image glass-panel" />
           </aside>
         </section>
 
