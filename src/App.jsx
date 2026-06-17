@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import Lenis from 'lenis';
+import NetworkBackground from './components/NetworkBackground';
 
 const skills = [
   'Java',
@@ -110,7 +112,10 @@ const sectionIds = ['hero', 'about', 'skills', 'projects', 'education', 'contact
 
 function App() {
   const [roleIndex, setRoleIndex] = useState(0);
+  const [displayText, setDisplayText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+  const [isScrolled, setIsScrolled] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -118,11 +123,95 @@ function App() {
   });
 
   useEffect(() => {
-    const intervalId = window.setInterval(() => {
-      setRoleIndex((currentIndex) => (currentIndex + 1) % roleTitles.length);
-    }, 2800);
+    const lenis = new Lenis({
+      autoRaf: true,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    });
 
-    return () => window.clearInterval(intervalId);
+    const handleAnchorClick = (e) => {
+      const target = e.target.closest('a');
+      if (target && target.hash && target.hash.startsWith('#')) {
+        const el = document.querySelector(target.hash);
+        if (el) {
+          e.preventDefault();
+          lenis.scrollTo(el);
+        }
+      }
+    };
+
+    document.addEventListener('click', handleAnchorClick);
+
+    return () => {
+      document.removeEventListener('click', handleAnchorClick);
+      lenis.destroy();
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const revealObserver = new window.IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        root: null,
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px',
+      }
+    );
+
+    const revealElements = document.querySelectorAll('.scroll-reveal');
+    revealElements.forEach((el) => revealObserver.observe(el));
+
+    return () => revealObserver.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const currentRole = roleTitles[roleIndex];
+    let typingSpeed = isDeleting ? 60 : 130;
+
+    if (!isDeleting && displayText === currentRole) {
+      typingSpeed = 2000;
+      setIsDeleting(true);
+    } else if (isDeleting && displayText === '') {
+      setIsDeleting(false);
+      setRoleIndex((prev) => (prev + 1) % roleTitles.length);
+      typingSpeed = 500;
+    }
+
+    const timer = setTimeout(() => {
+      setDisplayText((prev) => 
+        isDeleting 
+          ? currentRole.substring(0, prev.length - 1) 
+          : currentRole.substring(0, prev.length + 1)
+      );
+    }, typingSpeed);
+
+    return () => clearTimeout(timer);
+  }, [displayText, isDeleting, roleIndex]);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   useEffect(() => {
@@ -179,14 +268,9 @@ function App() {
 
   return (
     <div className="page-shell">
-      <div className="bg-orb bg-orb-one" />
-      <div className="bg-orb bg-orb-two" />
-      <header className="topbar glass-panel">
-        <div>
-          <a className="brand" href="#hero">
-            Abhinandan Dwivedi
-          </a>
-        </div>
+      <NetworkBackground />
+      <div className="cursor-spotlight" />
+      <header className={`topbar ${isScrolled ? 'topbar-scrolled' : ''}`}>
         <nav className="nav-links" aria-label="Primary navigation">
           <a className={activeSection === 'about' ? 'nav-link active' : 'nav-link'} href="#about">
             About
@@ -219,14 +303,15 @@ function App() {
         <section className="hero section" id="hero">
           <div className="hero-copy">
             <p className="eyebrow reveal role-badge" key={roleIndex}>
-              {roleTitles[roleIndex]}
+              {displayText}
+              <span className="cursor-blink">|</span>
             </p>
             <h1 className="hero-title reveal-delay-1">Abhinandan Dwivedi</h1>
             <p className="hero-text reveal-delay-2">
-              I build thoughtful digital experiences and technology solutions that combine
-              cloud-native thinking, clean engineering, and a strong interest in machine
-              learning. As a Computer Science student, I focus on creating practical systems
-              with measurable impact.
+              I build end-to-end machine learning solutions that transform data into
+              intelligent applications. From data preprocessing and model development
+              to deployment and monitoring, I enjoy creating scalable systems that
+              solve real-world problems.
             </p>
             <div className="hero-actions reveal-delay-3">
               <a className="button button-primary" href="#projects">
@@ -234,6 +319,14 @@ function App() {
               </a>
               <a className="button button-secondary" href="#contact">
                 Contact Me
+              </a>
+              <a 
+                className="button button-secondary" 
+                href="https://drive.google.com/file/d/1MHkvhCWHKj6oF-dkRCAu7Ib653ZG5NFz/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Resume
               </a>
             </div>
           </div>
@@ -244,11 +337,11 @@ function App() {
         </section>
 
         <section className="section" id="about">
-          <div className="section-heading">
+          <div className="section-heading scroll-reveal">
             <p className="eyebrow">About Me</p>
             <h2>Computer Science student with a builder mindset.</h2>
           </div>
-          <div className="glass-panel about-panel">
+          <div className="glass-panel about-panel scroll-reveal">
             <p>
               I am a Computer Science student with a strong foundation in Java, Python, and
               Data Structures & Algorithms. My interests extend toward Cloud Computing,
@@ -264,7 +357,7 @@ function App() {
         </section>
 
         <section className="section" id="skills">
-          <div className="section-heading">
+          <div className="section-heading scroll-reveal">
             <p className="eyebrow">Skills</p>
             <h2>Tools and technologies I use to ship ideas.</h2>
           </div>
@@ -272,8 +365,8 @@ function App() {
             {skills.map((skill, index) => (
               <article
                 key={skill}
-                className="glass-panel skill-card"
-                style={{ animationDelay: `${index * 90}ms` }}
+                className="glass-panel skill-card scroll-reveal"
+                style={{ transitionDelay: `${index * 50}ms` }}
               >
                 <span className="skill-index">0{index + 1}</span>
                 <h3>{skill}</h3>
@@ -283,13 +376,13 @@ function App() {
         </section>
 
         <section className="section" id="projects">
-          <div className="section-heading">
+          <div className="section-heading scroll-reveal">
             <p className="eyebrow">Projects</p>
             <h2>Selected work with practical problem-solving focus.</h2>
           </div>
           <div className="projects-grid">
-            {projects.map((project) => (
-              <article key={project.name} className="glass-panel project-card">
+            {projects.map((project, index) => (
+              <article key={project.name} className="glass-panel project-card scroll-reveal" style={{ transitionDelay: `${index * 100}ms` }}>
                 <p className="card-label">{project.tag}</p>
                 <h3>{project.name}</h3>
                 <p>{project.description}</p>
@@ -302,13 +395,13 @@ function App() {
         </section>
 
         <section className="section" id="education">
-          <div className="section-heading">
+          <div className="section-heading scroll-reveal">
             <p className="eyebrow">Education</p>
             <h2>Academic grounding with a future-facing focus.</h2>
           </div>
           <div className="education-grid">
-            {education.map((item) => (
-              <article key={item.title} className="glass-panel education-card">
+            {education.map((item, index) => (
+              <article key={item.title} className="glass-panel education-card scroll-reveal" style={{ transitionDelay: `${index * 100}ms` }}>
                 <h3>{item.title}</h3>
                 <p>{item.detail}</p>
               </article>
@@ -317,7 +410,7 @@ function App() {
         </section>
 
         <section className="section contact-section" id="contact">
-          <div className="section-heading contact-heading contact-heading-center">
+          <div className="section-heading contact-heading contact-heading-center scroll-reveal">
             <p className="eyebrow eyebrow-pill">Get in touch</p>
             <h2>Let's Build Together!</h2>
             <p className="contact-heading-text">
@@ -325,7 +418,7 @@ function App() {
             </p>
           </div>
 
-          <div className="glass-panel contact-panel">
+          <div className="glass-panel contact-panel scroll-reveal">
             <div className="contact-stack">
               <a
                 className="contact-info-card contact-info-card-link"
