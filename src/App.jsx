@@ -117,33 +117,75 @@ const projects = [
 
 const education = [
   {
-    title: 'Computer Science Student',
-    detail: 'Focused on building strong foundations in programming, systems, and problem solving.',
+    title: 'B.Tech in Computer Science',
+    years: '2023 - 2027',
+    college: 'Pranveer Singh Institute of Technology',
+    gpa: '7.57 CGPA',
+    tags: ['DSA', 'OOPs', 'DBMS', 'OS', 'CN', 'Web Dev']
   },
   {
-    title: 'Specialization Interests',
-    detail: 'Cloud platforms, AI/ML engineering, and production-ready MLOps workflows.',
+    title: 'Intermediate (12th Grade)',
+    years: '2022 - 2023',
+    college: 'Pm shri Kendriya Vidyalaya No. 1, Armapur',
+    gpa: '69.8%',
+    tags: ['Science Stream', 'CBSE']
   },
+  {
+    title: 'High School (10th Grade)',
+    years: '2020 - 2021',
+    college: 'Pm shri Kendriya Vidyalaya No. 1, Armapur',
+    gpa: '83.4%',
+    tags: ['Science Stream', 'CBSE']
+  }
 ];
 
 const certificates = [
   {
-    name: 'Machine Learning Specialization',
-    issuer: 'Stanford University & DeepLearning.AI',
-    date: '2023',
-    link: '#',
+    name: 'Oracle Cloud Infrastructure 2025 AI Foundations Associate',
+    issuer: 'Oracle',
+    date: '2025',
+    link: '/certificates/Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate.png',
+    verifyLink: 'https://catalog-education.oracle.com/ords/certview/sharebadge?id=88DD7C1AD707D80E77ECC165CBBC5C933345463364FC85905AB588C7DCA67037',
   },
   {
-    name: 'AWS Certified Machine Learning – Specialty',
-    issuer: 'Amazon Web Services',
-    date: '2024',
-    link: '#',
+    name: 'Anthropic AI Fluency',
+    issuer: 'Anthropic',
+    date: '2026',
+    link: '/certificates/Anthropic AI fluency.png',
+    verifyLink: 'https://verify.skilljar.com/c/bcbyh3a6tfid',
   },
   {
-    name: 'TensorFlow Developer Certificate',
-    issuer: 'Google',
-    date: '2023',
-    link: '#',
+    name: 'Anthropic Claude 101',
+    issuer: 'Anthropic',
+    date: '2026',
+    link: '/certificates/Anthropic Claude 101.png',
+    verifyLink: 'https://verify.skilljar.com/c/76apw9gyr44s',
+  },
+  {
+    name: 'McKinsey & Company Forward Program',
+    issuer: 'McKinsey & Company',
+    date: '2026',
+    link: '/certificates/Mckinsey & company forward program.png',
+  },
+  {
+    name: 'Python (Basic) Certificate',
+    issuer: 'HackerRank',
+    date: '2025',
+    link: '/certificates/Hackerrank python.png',
+    verifyLink: 'https://www.hackerrank.com/certificates/cc9f83b2977f',
+  },
+  {
+    name: 'Java (Basic) Certificate',
+    issuer: 'HackerRank',
+    date: '2025',
+    link: '/certificates/Hackerrank Java.png',
+    verifyLink: 'https://www.hackerrank.com/certificates/iframe/bf6d36368d96',
+  },
+  {
+    name: 'Java Course Completion',
+    issuer: 'Apna College',
+    date: '2025',
+    link: '/certificates/Apna college Java.png',
   },
 ];
 
@@ -218,11 +260,14 @@ function App() {
   const [activeSection, setActiveSection] = useState('hero');
   const [isScrolled, setIsScrolled] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
+  const [showAllCertificates, setShowAllCertificates] = useState(false);
+  const [activeCertificate, setActiveCertificate] = useState(0);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
   });
+  const [formStatus, setFormStatus] = useState('idle');
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -352,20 +397,37 @@ function App() {
     }));
   };
 
-  const handleContactSubmit = (event) => {
+  const handleContactSubmit = async (event) => {
     event.preventDefault();
+    setFormStatus('loading');
 
-    const subject = `Portfolio contact from ${formData.name}`;
-    const body = [
-      `Name: ${formData.name}`,
-      `Email: ${formData.email}`,
-      '',
-      formData.message,
-    ].join('\n');
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: 'YOUR_WEB3FORMS_ACCESS_KEY_HERE',
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        })
+      });
 
-    const mailtoUrl = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-    window.location.href = mailtoUrl;
+      const result = await response.json();
+      if (result.success) {
+        setFormStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+        // Reset success message after 5 seconds
+        setTimeout(() => setFormStatus('idle'), 5000);
+      } else {
+        setFormStatus('error');
+      }
+    } catch (error) {
+      setFormStatus('error');
+    }
   };
 
   return (
@@ -468,16 +530,16 @@ function App() {
           <div className="about-bento-grid">
             <div className="glass-panel about-panel scroll-reveal">
               <p>
-                I'm a Computer Science and IoT student with a strong passion for <strong>Machine Learning, MLOps, and Cloud Technologies</strong>. I enjoy solving complex problems and building intelligent systems that can make data-driven decisions and create real-world impact.
+                I'm a Computer Science and IoT student passionate about Machine Learning, MLOps, and Cloud Technologies. I enjoy building intelligent, data-driven solutions and tackling complex problems through technology.
               </p>
               <p>
-                My journey in technology started with programming and problem-solving, which led me to explore Data Structures & Algorithms, Machine Learning, and software development. Over time, I developed a deep interest in understanding how machine learning models move from experimentation to production, which inspired me to pursue MLOps.
+                My journey began with programming and problem-solving, which led me to explore Data Structures & Algorithms, Machine Learning, and software development. Over time, I developed a strong interest in MLOps and the process of deploying and managing machine learning systems in production environments.
               </p>
               <p>
-                I have worked on several end-to-end machine learning projects, including athlete performance prediction, apartment price prediction, and sentiment analysis. These projects helped me gain hands-on experience in data preprocessing, feature engineering, model training, evaluation, visualization, and deployment.
+                I have worked on end-to-end machine learning projects, including athlete performance prediction, apartment price prediction, and sentiment analysis, gaining hands-on experience in data preprocessing, feature engineering, model development, visualization, and deployment.
               </p>
               <p>
-                Beyond machine learning, I continuously strengthen my foundation in Computer Science through topics such as Operating Systems, Database Management Systems, System Design, and Cloud Computing. I also actively practice coding and algorithmic problem-solving to improve my analytical thinking and software engineering skills.
+                Alongside machine learning, I continuously strengthen my foundation in Computer Science through Operating Systems, DBMS, System Design, Cloud Computing, and algorithmic problem-solving.
               </p>
             </div>
 
@@ -611,11 +673,24 @@ function App() {
             <p className="eyebrow">Education</p>
             <h2>Academic grounding with a future-facing focus.</h2>
           </div>
-          <div className="education-grid">
+          <div className="education-stack">
             {education.map((item, index) => (
-              <article key={item.title} className="glass-panel education-card scroll-reveal" style={{ transitionDelay: `${index * 100}ms` }}>
-                <h3>{item.title}</h3>
-                <p>{item.detail}</p>
+              <article key={item.title} className="glass-panel education-list-card scroll-reveal" style={{ transitionDelay: `${index * 100}ms` }}>
+                <div className="education-header">
+                  <h3>{item.title}</h3>
+                  <span className="education-years">{item.years}</span>
+                </div>
+                <p className="education-college">{item.college}</p>
+                <div className="education-footer">
+                  <div className="education-tags">
+                    {item.tags?.map(tag => (
+                      <span key={tag} className="education-tag">{tag}</span>
+                    ))}
+                  </div>
+                  <div className="education-gpa">
+                    {item.gpa}
+                  </div>
+                </div>
               </article>
             ))}
           </div>
@@ -626,16 +701,60 @@ function App() {
             <p className="eyebrow">Certificates</p>
             <h2>Verified credentials and continuous learning.</h2>
           </div>
-          <div className="certificates-grid">
-            {certificates.map((cert, index) => (
-              <article key={cert.name} className="glass-panel certificate-card scroll-reveal" style={{ transitionDelay: `${index * 100}ms` }}>
-                <p className="card-label">{cert.issuer} &middot; {cert.date}</p>
-                <h3>{cert.name}</h3>
-                <a href={cert.link} className="project-link" target="_blank" rel="noopener noreferrer">
-                  Verify Credential
-                </a>
-              </article>
-            ))}
+          
+          <div className="certificates-interactive-container scroll-reveal">
+            <div className="certificates-list">
+              {certificates.slice(0, showAllCertificates ? certificates.length : 5).map((cert, index) => (
+                <div 
+                  key={cert.name} 
+                  className={`certificate-list-item ${activeCertificate === index ? 'active' : ''}`}
+                  onMouseEnter={() => setActiveCertificate(index)}
+                  onClick={() => setActiveCertificate(index)}
+                >
+                  <h3 className="certificate-list-name">{cert.name}</h3>
+                  <div className="certificate-list-meta">
+                    <span className="dot"></span>
+                    {cert.issuer} &middot; {cert.date}
+                  </div>
+                </div>
+              ))}
+              
+              {certificates.length > 5 && (
+                <div style={{ marginTop: '10px' }}>
+                  <button 
+                    onClick={() => {
+                      setShowAllCertificates(!showAllCertificates);
+                      if (showAllCertificates && activeCertificate >= 5) {
+                        setActiveCertificate(0);
+                      }
+                    }} 
+                    className="button button-secondary"
+                    style={{ minHeight: '40px', fontSize: '0.9rem', width: '100%', borderRadius: '12px' }}
+                  >
+                    {showAllCertificates ? 'Show Less' : 'Show More Certificates'}
+                  </button>
+                </div>
+              )}
+            </div>
+            
+            <div className="certificate-display">
+              <div className="certificate-display-inner glass-panel">
+                <img 
+                  key={certificates[activeCertificate].name}
+                  src={certificates[activeCertificate].link} 
+                  alt={certificates[activeCertificate].name} 
+                  className="certificate-display-image fade-in"
+                  loading="lazy"
+                />
+                {certificates[activeCertificate].verifyLink && (
+                  <div className="certificate-display-action">
+                     <a href={certificates[activeCertificate].verifyLink} target="_blank" rel="noopener noreferrer" className="button button-primary" style={{ minHeight: '40px', fontSize: '0.9rem' }}>
+                       Verify Credential
+                     </a>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </section>
 
@@ -743,9 +862,14 @@ function App() {
                 />
               </label>
 
-              <button className="button button-primary send-button" type="submit">
-                Send Message
+              <button className="button button-primary send-button" type="submit" disabled={formStatus === 'loading'}>
+                {formStatus === 'loading' ? 'Sending...' : formStatus === 'success' ? 'Message Sent!' : 'Send Message'}
               </button>
+              {formStatus === 'error' && (
+                <p style={{ color: '#ef4444', marginTop: '12px', fontSize: '0.95rem' }}>
+                  Something went wrong. Please try again or email me directly.
+                </p>
+              )}
             </form>
           </div>
         </section>
