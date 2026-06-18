@@ -1,37 +1,117 @@
 import { useEffect, useState } from 'react';
 import Lenis from 'lenis';
 import NetworkBackground from './components/NetworkBackground';
+import { FaJava, FaPython, FaProjectDiagram, FaRobot, FaBrain, FaComments, FaCogs, FaCloud, FaGithub, FaDatabase, FaMagic, FaJs, FaLaptopCode, FaNetworkWired, FaReact, FaNodeJs, FaCube, FaFlask, FaBolt } from 'react-icons/fa';
 
-const skills = [
-  'Java',
-  'Python',
-  'Data Structures & Algorithms',
-  'Machine Learning',
-  'Deep Learning',
-  'NLP',
-  'MLOps',
-  'Cloud Computing',
-  'Git & GitHub',
+const skillsData = [
+  {
+    category: "Languages & Core",
+    items: [
+      { name: "C/C++", icon: <FaLaptopCode /> },
+      { name: "Java", icon: <FaJava /> },
+      { name: "Python", icon: <FaPython /> },
+      { name: "JavaScript", icon: <FaJs /> },
+      { name: "Data Structures & Algorithms", icon: <FaProjectDiagram /> }
+    ]
+  },
+  {
+    category: "Libraries & Frameworks",
+    items: [
+      { name: "React", icon: <FaReact /> },
+      { name: "Node.js", icon: <FaNodeJs /> },
+      { name: "Flask", icon: <FaFlask /> },
+      { name: "FastAPI", icon: <FaBolt /> },
+      { name: "TensorFlow / PyTorch", icon: <FaCube /> },
+      { name: "Pandas / Scikit-Learn", icon: <FaDatabase /> }
+    ]
+  },
+  {
+    category: "AI & Machine Learning",
+    items: [
+      { name: "Machine Learning", icon: <FaRobot /> },
+      { name: "Deep Learning", icon: <FaBrain /> },
+      { name: "NLP", icon: <FaComments /> },
+      { name: "Generative AI", icon: <FaMagic /> },
+      { name: "Agentic AI", icon: <FaNetworkWired /> }
+    ]
+  },
+  {
+    category: "Cloud & Tools",
+    items: [
+      { name: "MLOps", icon: <FaCogs /> },
+      { name: "Cloud Computing", icon: <FaCloud /> },
+      { name: "Git & GitHub", icon: <FaGithub /> },
+      { name: "MySQL", icon: <FaDatabase /> }
+    ]
+  }
 ];
 
 const projects = [
   {
-    name: 'IoT Based Automatic Vehicle Accident Detection and Rescue System',
-    description:
-      'An intelligent safety solution that detects accidents through connected sensors and supports faster emergency response workflows.',
-    tag: 'IoT + Safety Automation',
+    name: 'Neural Network From Scratch for MNIST Digit Recognition',
+    description: 'Built a neural network from the ground up to recognize handwritten digits without relying on high-level deep learning frameworks.',
+    github: 'https://github.com/Abhinandan2006/Neural-network-form-scratch-',
+    features: [
+      'Implemented forward and backward propagation algorithms manually using NumPy',
+      'Engineered custom activation functions (ReLU, Softmax) and loss calculations',
+      'Optimized matrix multiplications to drastically reduce training time',
+      'Achieved over 95% accuracy on the test set',
+      'Deepened core understanding of gradient descent and backpropagation mathematics'
+    ],
+    tag: 'Deep Learning + Mathematics',
   },
   {
-    name: 'Water Quality Monitoring System',
-    description:
-      'A monitoring platform designed to track water quality parameters and surface actionable insights through reliable telemetry.',
-    tag: 'Sensors + Monitoring',
+    name: 'Chess Bot Engine',
+    description: 'Developed an intelligent chess bot with move prediction and strategic evaluation algorithms capable of competitive gameplay.',
+    github: 'https://github.com/Abhinandan2006/My-chess-bot',
+    features: [
+      'Designed a custom board representation and legal move generator',
+      'Implemented Minimax algorithm with Alpha-Beta pruning for efficient game tree search',
+      'Created custom heuristic evaluation functions for piece positioning and game phases',
+      'Optimized search depth and performance to ensure fast move responses',
+      'Built a clean user interface to play directly against the engine'
+    ],
+    tag: 'Algorithms + AI',
   },
   {
-    name: 'Home Automation Dashboard',
-    description:
-      'A centralized interface for controlling and observing smart-home devices with a clean, responsive user experience.',
-    tag: 'Smart Home UI',
+    name: 'Gurgaon Real Estate Insights',
+    description: 'A smart property analytics and prediction application that uses machine learning to forecast real estate prices and provide valuable market insights.',
+    github: 'https://github.com/Abhinandan2006/Captone_project',
+    features: [
+      'Scraped and preprocessed thousands of real estate listings',
+      'Performed extensive Exploratory Data Analysis (EDA) to find pricing trends',
+      'Engineered features like location tiers, square footage, and amenities',
+      'Trained Random Forest and XGBoost regression models for price prediction',
+      'Deployed an interactive web dashboard for users to estimate property values'
+    ],
+    tag: 'Machine Learning + Data Science',
+  },
+  {
+    name: 'Olympics Data Analysis & Medal Prediction App',
+    description: 'An interactive web app that analyzes historical Olympics data to identify trends and uses predictive modeling to forecast future medal tallies.',
+    features: [
+      'Cleans & preprocesses 270,000+ Olympic athlete records',
+      'Handles missing values using Iterative Imputer & Simple Imputer',
+      'Removes outliers using Z-Score + IQR and balances dataset using SMOTE',
+      'Encodes categorical features using OneHot, Ordinal & Target Encoding',
+      'Trains a custom LightGBM model to predict which medal an athlete may win',
+      'Includes a fully interactive Streamlit dashboard with Country-wise insights'
+    ],
+    github: 'https://github.com/Abhinandan2006/Olympics_Analysis_-_prediction_model',
+    tag: 'Python, Machine Learning',
+  },
+  {
+    name: 'Twitter Sentiment Analysis Application',
+    description: 'A robust NLP application designed to process and analyze tweets, classifying public sentiment to surface actionable insights.',
+    github: 'https://github.com/Abhinandan2006/Twitter-sentiment-analysis-project',
+    features: [
+      'Ingested and processed large volumes of text data from the Twitter API',
+      'Applied advanced NLP techniques for text cleaning, tokenization, and stemming',
+      'Utilized TF-IDF and word embeddings for feature extraction',
+      'Built and tuned classification models to detect positive, negative, and neutral sentiment',
+      'Visualized sentiment distributions and trending keywords in an analytics dashboard'
+    ],
+    tag: 'NLP + Sentiment Analysis',
   },
 ];
 
@@ -137,6 +217,7 @@ function App() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showAllProjects, setShowAllProjects] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -199,7 +280,7 @@ function App() {
     revealElements.forEach((el) => revealObserver.observe(el));
 
     return () => revealObserver.disconnect();
-  }, []);
+  }, [showAllProjects]);
 
   useEffect(() => {
     const currentRole = roleTitles[roleIndex];
@@ -459,16 +540,23 @@ function App() {
             <p className="eyebrow">Skills</p>
             <h2>Tools and technologies I use to ship ideas.</h2>
           </div>
-          <div className="skills-grid">
-            {skills.map((skill, index) => (
-              <article
-                key={skill}
-                className="glass-panel skill-card scroll-reveal"
-                style={{ transitionDelay: `${index * 50}ms` }}
+          <div className="skills-category-grid">
+            {skillsData.map((categoryGroup, index) => (
+              <div 
+                key={categoryGroup.category} 
+                className="glass-panel skill-category-card scroll-reveal"
+                style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <span className="skill-index">0{index + 1}</span>
-                <h3>{skill}</h3>
-              </article>
+                <h3>{categoryGroup.category}</h3>
+                <div className="skill-pills-container">
+                  {categoryGroup.items.map(skill => (
+                    <div key={skill.name} className="skill-pill">
+                      <span className="skill-icon">{skill.icon}</span>
+                      <span className="skill-name">{skill.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </section>
@@ -479,17 +567,43 @@ function App() {
             <h2>Selected work with practical problem-solving focus.</h2>
           </div>
           <div className="projects-grid">
-            {projects.map((project, index) => (
+            {projects.slice(0, showAllProjects ? projects.length : 3).map((project, index) => (
               <article key={project.name} className="glass-panel project-card scroll-reveal" style={{ transitionDelay: `${index * 100}ms` }}>
                 <p className="card-label">{project.tag}</p>
                 <h3>{project.name}</h3>
-                <p>{project.description}</p>
-                <a href="#contact" className="project-link">
-                  Discuss this project
-                </a>
+                <div className="project-desc" style={{ marginBottom: '20px', color: 'var(--muted)' }}>
+                  <p style={{ marginBottom: '14px' }}>{project.description}</p>
+                  {project.features && (
+                    <ul className="project-features-list">
+                      {project.features.map((feature, i) => (
+                        <li key={i}>{feature}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+                <div className="project-links-container">
+                  {project.github && (
+                    <a href={project.github} className="project-link" target="_blank" rel="noopener noreferrer">
+                      <FaGithub style={{ fontSize: '1.1rem' }} /> Source Code
+                    </a>
+                  )}
+                  <a href="#contact" className="project-link">
+                    Discuss this project
+                  </a>
+                </div>
               </article>
             ))}
           </div>
+          {projects.length > 3 && (
+            <div style={{ textAlign: 'center', marginTop: '40px' }} className="scroll-reveal">
+              <button 
+                onClick={() => setShowAllProjects(!showAllProjects)} 
+                className="button button-secondary"
+              >
+                {showAllProjects ? 'Show Less' : 'Show More Projects'}
+              </button>
+            </div>
+          )}
         </section>
 
         <section className="section" id="education">
