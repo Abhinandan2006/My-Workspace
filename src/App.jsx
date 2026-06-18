@@ -46,6 +46,27 @@ const education = [
   },
 ];
 
+const certificates = [
+  {
+    name: 'Machine Learning Specialization',
+    issuer: 'Stanford University & DeepLearning.AI',
+    date: '2023',
+    link: '#',
+  },
+  {
+    name: 'AWS Certified Machine Learning – Specialty',
+    issuer: 'Amazon Web Services',
+    date: '2024',
+    link: '#',
+  },
+  {
+    name: 'TensorFlow Developer Certificate',
+    issuer: 'Google',
+    date: '2023',
+    link: '#',
+  },
+];
+
 const connectLinks = [
   {
     label: 'GitHub',
@@ -108,7 +129,7 @@ const roleTitles = [
   'Machine learning builder.',
 ];
 
-const sectionIds = ['hero', 'about', 'skills', 'projects', 'education', 'contact'];
+const sectionIds = ['hero', 'about', 'skills', 'projects', 'education', 'certificates', 'contact'];
 
 function App() {
   const [roleIndex, setRoleIndex] = useState(0);
@@ -291,6 +312,12 @@ function App() {
             Education
           </a>
           <a
+            className={activeSection === 'certificates' ? 'nav-link active' : 'nav-link'}
+            href="#certificates"
+          >
+            Certificates
+          </a>
+          <a
             className={activeSection === 'contact' ? 'nav-link active' : 'nav-link'}
             href="#contact"
           >
@@ -329,6 +356,21 @@ function App() {
                 Resume
               </a>
             </div>
+
+            <div className="hero-stats reveal-delay-3">
+              <div>
+                <span>700+</span>
+                <p>LeetCode Problems Solved</p>
+              </div>
+              <div>
+                <span>1770</span>
+                <p>LeetCode Rating</p>
+              </div>
+              <div>
+                <span>10+</span>
+                <p>Projects Built</p>
+              </div>
+            </div>
           </div>
 
           <aside className="hero-image-container reveal-delay-2">
@@ -339,20 +381,76 @@ function App() {
         <section className="section" id="about">
           <div className="section-heading scroll-reveal">
             <p className="eyebrow">About Me</p>
-            <h2>Computer Science student with a builder mindset.</h2>
+            <h2>Hello! I'm Abhinandan Dwivedi.</h2>
           </div>
-          <div className="glass-panel about-panel scroll-reveal">
-            <p>
-              I am a Computer Science student with a strong foundation in Java, Python, and
-              Data Structures & Algorithms. My interests extend toward Cloud Computing,
-              Artificial Intelligence, Machine Learning, and MLOps, where I enjoy turning
-              ideas into reliable and scalable solutions.
-            </p>
-            <p>
-              I value clean architecture, efficient execution, and practical outcomes. My
-              work style centers on continuous learning, disciplined problem solving, and
-              building technology that feels both modern and useful.
-            </p>
+          
+          <div className="about-bento-grid">
+            <div className="glass-panel about-panel scroll-reveal">
+              <p>
+                I'm a Computer Science and IoT student with a strong passion for <strong>Machine Learning, MLOps, and Cloud Technologies</strong>. I enjoy solving complex problems and building intelligent systems that can make data-driven decisions and create real-world impact.
+              </p>
+              <p>
+                My journey in technology started with programming and problem-solving, which led me to explore Data Structures & Algorithms, Machine Learning, and software development. Over time, I developed a deep interest in understanding how machine learning models move from experimentation to production, which inspired me to pursue MLOps.
+              </p>
+              <p>
+                I have worked on several end-to-end machine learning projects, including athlete performance prediction, apartment price prediction, and sentiment analysis. These projects helped me gain hands-on experience in data preprocessing, feature engineering, model training, evaluation, visualization, and deployment.
+              </p>
+              <p>
+                Beyond machine learning, I continuously strengthen my foundation in Computer Science through topics such as Operating Systems, Database Management Systems, System Design, and Cloud Computing. I also actively practice coding and algorithmic problem-solving to improve my analytical thinking and software engineering skills.
+              </p>
+            </div>
+
+            <div className="about-split-panel">
+              <div className="glass-panel scroll-reveal reveal-delay-1 about-what-i-do">
+                <h3>What I Do</h3>
+                <div className="what-i-do-grid">
+                  <div className="what-i-do-card">
+                    <div className="card-icon">🧠</div>
+                    <span>Build Machine Learning & Data Science projects</span>
+                  </div>
+                  <div className="what-i-do-card">
+                    <div className="card-icon">⚙️</div>
+                    <span>Develop end-to-end ML pipelines</span>
+                  </div>
+                  <div className="what-i-do-card">
+                    <div className="card-icon">☁️</div>
+                    <span>Explore MLOps and Cloud technologies</span>
+                  </div>
+                  <div className="what-i-do-card">
+                    <div className="card-icon">💻</div>
+                    <span>Practice Data Structures & Algorithms</span>
+                  </div>
+                  <div className="what-i-do-card">
+                    <div className="card-icon">📊</div>
+                    <span>Create data visualizations & dashboards</span>
+                  </div>
+                  <div className="what-i-do-card">
+                    <div className="card-icon">🏗️</div>
+                    <span>Learn scalable system design principles</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="about-goals-panel">
+                <div className="glass-panel scroll-reveal reveal-delay-2 about-side-card">
+                  <h3>My Goals</h3>
+                  <p>
+                    My goal is to become a skilled <strong>MLOps Engineer</strong> capable of building scalable, reliable, and production-ready AI systems. I am constantly learning new technologies and best practices to bridge the gap between machine learning development and deployment.
+                  </p>
+                </div>
+                
+                <div className="glass-panel scroll-reveal reveal-delay-3 about-side-card">
+                  <h3>Beyond Technology</h3>
+                  <p>
+                    Beyond technology, I enjoy playing chess, watching movies, cooking, and listening to music. These hobbies help me stay creative, focused, and maintain a healthy balance between learning and personal growth.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <blockquote className="about-blockquote scroll-reveal reveal-delay-2">
+              "I believe that continuous learning, consistency, and curiosity are the keys to building impactful technology."
+            </blockquote>
           </div>
         </section>
 
@@ -404,6 +502,24 @@ function App() {
               <article key={item.title} className="glass-panel education-card scroll-reveal" style={{ transitionDelay: `${index * 100}ms` }}>
                 <h3>{item.title}</h3>
                 <p>{item.detail}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section" id="certificates">
+          <div className="section-heading scroll-reveal">
+            <p className="eyebrow">Certificates</p>
+            <h2>Verified credentials and continuous learning.</h2>
+          </div>
+          <div className="certificates-grid">
+            {certificates.map((cert, index) => (
+              <article key={cert.name} className="glass-panel certificate-card scroll-reveal" style={{ transitionDelay: `${index * 100}ms` }}>
+                <p className="card-label">{cert.issuer} &middot; {cert.date}</p>
+                <h3>{cert.name}</h3>
+                <a href={cert.link} className="project-link" target="_blank" rel="noopener noreferrer">
+                  Verify Credential
+                </a>
               </article>
             ))}
           </div>
