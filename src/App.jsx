@@ -341,9 +341,9 @@ function App() {
     }
 
     const timer = setTimeout(() => {
-      setDisplayText((prev) => 
-        isDeleting 
-          ? currentRole.substring(0, prev.length - 1) 
+      setDisplayText((prev) =>
+        isDeleting
+          ? currentRole.substring(0, prev.length - 1)
           : currentRole.substring(0, prev.length + 1)
       );
     }, typingSpeed);
@@ -401,19 +401,13 @@ function App() {
     event.preventDefault();
     setFormStatus('loading');
 
+    const formDataObj = new FormData(event.target);
+    formDataObj.append("access_key", "a9acc008-e5a4-4388-9c5d-beff61bdde04");
+
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json'
-        },
-        body: JSON.stringify({
-          access_key: 'YOUR_WEB3FORMS_ACCESS_KEY_HERE',
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-        })
+        body: formDataObj
       });
 
       const result = await response.json();
@@ -423,9 +417,11 @@ function App() {
         // Reset success message after 5 seconds
         setTimeout(() => setFormStatus('idle'), 5000);
       } else {
+        console.error("Web3Forms Error:", result);
         setFormStatus('error');
       }
     } catch (error) {
+      console.error("Fetch Error:", error);
       setFormStatus('error');
     }
   };
@@ -490,8 +486,8 @@ function App() {
               <a className="button button-secondary" href="#contact">
                 Contact Me
               </a>
-              <a 
-                className="button button-secondary" 
+              <a
+                className="button button-secondary"
                 href="https://drive.google.com/file/d/1MHkvhCWHKj6oF-dkRCAu7Ib653ZG5NFz/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -526,7 +522,7 @@ function App() {
             <p className="eyebrow">About Me</p>
             <h2>Hello! I'm Abhinandan Dwivedi.</h2>
           </div>
-          
+
           <div className="about-bento-grid">
             <div className="glass-panel about-panel scroll-reveal">
               <p>
@@ -581,7 +577,7 @@ function App() {
                     My goal is to become a skilled <strong>MLOps Engineer</strong> capable of building scalable, reliable, and production-ready AI systems. I am constantly learning new technologies and best practices to bridge the gap between machine learning development and deployment.
                   </p>
                 </div>
-                
+
                 <div className="glass-panel scroll-reveal reveal-delay-3 about-side-card">
                   <h3>Beyond Technology</h3>
                   <p>
@@ -604,8 +600,8 @@ function App() {
           </div>
           <div className="skills-category-grid">
             {skillsData.map((categoryGroup, index) => (
-              <div 
-                key={categoryGroup.category} 
+              <div
+                key={categoryGroup.category}
                 className="glass-panel skill-category-card scroll-reveal"
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
@@ -658,8 +654,8 @@ function App() {
           </div>
           {projects.length > 3 && (
             <div style={{ textAlign: 'center', marginTop: '40px' }} className="scroll-reveal">
-              <button 
-                onClick={() => setShowAllProjects(!showAllProjects)} 
+              <button
+                onClick={() => setShowAllProjects(!showAllProjects)}
                 className="button button-secondary"
               >
                 {showAllProjects ? 'Show Less' : 'Show More Projects'}
@@ -701,12 +697,12 @@ function App() {
             <p className="eyebrow">Certificates</p>
             <h2>Verified credentials and continuous learning.</h2>
           </div>
-          
+
           <div className="certificates-interactive-container scroll-reveal">
             <div className="certificates-list">
               {certificates.slice(0, showAllCertificates ? certificates.length : 5).map((cert, index) => (
-                <div 
-                  key={cert.name} 
+                <div
+                  key={cert.name}
                   className={`certificate-list-item ${activeCertificate === index ? 'active' : ''}`}
                   onMouseEnter={() => setActiveCertificate(index)}
                   onClick={() => setActiveCertificate(index)}
@@ -718,16 +714,16 @@ function App() {
                   </div>
                 </div>
               ))}
-              
+
               {certificates.length > 5 && (
                 <div style={{ marginTop: '10px' }}>
-                  <button 
+                  <button
                     onClick={() => {
                       setShowAllCertificates(!showAllCertificates);
                       if (showAllCertificates && activeCertificate >= 5) {
                         setActiveCertificate(0);
                       }
-                    }} 
+                    }}
                     className="button button-secondary"
                     style={{ minHeight: '40px', fontSize: '0.9rem', width: '100%', borderRadius: '12px' }}
                   >
@@ -736,21 +732,21 @@ function App() {
                 </div>
               )}
             </div>
-            
+
             <div className="certificate-display">
               <div className="certificate-display-inner glass-panel">
-                <img 
+                <img
                   key={certificates[activeCertificate].name}
-                  src={certificates[activeCertificate].link} 
-                  alt={certificates[activeCertificate].name} 
+                  src={certificates[activeCertificate].link}
+                  alt={certificates[activeCertificate].name}
                   className="certificate-display-image fade-in"
                   loading="lazy"
                 />
                 {certificates[activeCertificate].verifyLink && (
                   <div className="certificate-display-action">
-                     <a href={certificates[activeCertificate].verifyLink} target="_blank" rel="noopener noreferrer" className="button button-primary" style={{ minHeight: '40px', fontSize: '0.9rem' }}>
-                       Verify Credential
-                     </a>
+                    <a href={certificates[activeCertificate].verifyLink} target="_blank" rel="noopener noreferrer" className="button button-primary" style={{ minHeight: '40px', fontSize: '0.9rem' }}>
+                      Verify Credential
+                    </a>
                   </div>
                 )}
               </div>
