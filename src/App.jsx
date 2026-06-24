@@ -48,6 +48,19 @@ const skillsData = [
 
 const projects = [
   {
+    name: 'YouTube Sentiment Analysis Plugin',
+    description: 'A browser plugin that analyzes sentiments from YouTube comments and provides insights into audience reactions in real time.',
+    github: 'https://lnkd.in/gy_ujyzP',
+    features: [
+      'Extracts comments directly from YouTube videos',
+      'Performs sentiment analysis using Machine Learning and NLP',
+      'Classifies comments into Positive, Negative, or Neutral categories',
+      'Provides an overall sentiment summary for the video',
+      'Integrates ML models seamlessly into a browser extension'
+    ],
+    tag: 'Machine Learning + NLP',
+  },
+  {
     name: 'Neural Network From Scratch for MNIST Digit Recognition',
     description: 'Built a neural network from the ground up to recognize handwritten digits without relying on high-level deep learning frameworks.',
     github: 'https://github.com/Abhinandan2006/Neural-network-form-scratch-',
